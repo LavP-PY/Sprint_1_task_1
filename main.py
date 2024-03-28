@@ -1,5 +1,6 @@
 import data_download as dd
 import data_plotting as dplt
+from practic_task_one import calculate_and_display_average_price as calc_ave
 
 
 def main():
@@ -13,11 +14,15 @@ def main():
     # Fetch stock data
     stock_data = dd.fetch_stock_data(ticker, period)
 
+    # calculation data's average
+    average = calc_ave(stock_data)
+    print(f'The average value for the selected period (Среднее значение за выбранный период): {average}')
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
 
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
+
 
 
 if __name__ == "__main__":
