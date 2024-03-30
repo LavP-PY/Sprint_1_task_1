@@ -1,6 +1,7 @@
 import data_download as dd
 import data_plotting as dplt
-from practic_task_one import calculate_and_display_average_price as calc_ave
+import practical_tasks
+
 
 
 def main():
@@ -10,13 +11,21 @@ def main():
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc):")
     period = input("Введите период для данных (например, '1mo' для одного месяца): ")
+    threshold = float(input("Введите максимальное допустимое значение колебания цены, % (например, 1.5 - для 1.5%; Если не требуется, то введите - 0): "))
 
     # Fetch stock data
     stock_data = dd.fetch_stock_data(ticker, period)
 
     # calculation data's average
-    average = calc_ave(stock_data)
+    average = practical_tasks.calculate_and_display_average_price(stock_data)
     print(f'The average value for the selected period (Среднее значение за выбранный период): {average}')
+
+    # notify about strong fluctuations
+    if threshold == 0:
+        pass
+    elif threshold > 0:
+        practical_tasks.notify_if_strong_fluctuations(stock_data, threshold)
+
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
 

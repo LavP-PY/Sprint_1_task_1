@@ -1,6 +1,6 @@
 import data_download as dd
 import matplotlib.pyplot as plt
-from practic_task_one import calculate_and_display_average_price as calc_ave
+from practical_tasks import calculate_and_display_average_price as calc_ave
 import pandas as pd
 
 ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc):")
@@ -41,3 +41,9 @@ def calculate_and_display_average_price_v2(data, ticker, period, filename=None):
     print(f'The average value for the selected period (Среднее значение за выбранный период): {calc_ave(data)}')
 
 averenge = calculate_and_display_average_price_v2(data=stock_data, ticker=ticker, period=period)
+
+def notify_if_strong_fluctuations(data, threshold=False):
+    for i in range(1, len(data['Close'])):
+        print(i, data['Close'][i], data['Close'][i-1])
+
+notify_if_strong_fluctuations(stock_data)
