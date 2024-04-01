@@ -11,8 +11,8 @@ def main():
 
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc):")
     period = input("Введите период для данных (например, '1mo' для одного месяца): ")
-    threshold = float(input(
-        "Введите максимальное допустимое значение колебания цены, % (например, 1.5 - для 1.5%; Если не требуется, то введите - 0): "))
+    threshold = float(input("Введите максимальное допустимое значение колебания цены, % (например, 1.5 - для 1.5%; Если не требуется, то введите - 0): "))
+    filename_csv = input("Введите название csv файла, для сохранения среднего значения (если вы не хотите выводить данные в таблицу, введите - 0; если название не принципиально введите - 1): ")
 
     # Fetch stock data
     stock_data = dd.fetch_stock_data(ticker, period)
@@ -34,7 +34,13 @@ def main():
     dplt.create_and_save_plot(stock_data, ticker, period)
 
     # writing data to csv
-    prt.export_data_to_csv(data_average=average, ticker=ticker, period=period)
+    try:
+        if int(filename_csv) == 1:
+            prt.export_data_to_csv(data_average=average, ticker=ticker, period=period)
+        elif int(filename_csv) != 0:
+            prt.export_data_to_csv(data_average=average, ticker=ticker, period=period, filename=filename_csv)
+    except Exception:
+        prt.export_data_to_csv(data_average=average, ticker=ticker, period=period, filename=filename_csv)
 
 
 if __name__ == "__main__":

@@ -58,4 +58,4 @@ def export_data_to_csv(ticker, period, data_average, filename=None):
     frame = pd.DataFrame(data)
     if filename is None:
         filename = f"Average_value_{ticker}_for_{period}"
-    frame.to_csv(filename, index=False)
+    frame.to_csv(f'{filename}.csv', index=False)
