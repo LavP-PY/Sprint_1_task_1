@@ -11,10 +11,9 @@
 #
 # Реализация:
 # Функция будет принимать DataFrame и вычислять среднее значение колонки 'Close'. Результат будет выводиться в консоль.
-import yfinance as yf
-import data_download as dd
-import matplotlib.pyplot as plt
+
 import pandas as pd
+
 
 def calculate_and_display_average_price(data):
     all_period = len(data)
@@ -51,3 +50,12 @@ def notify_if_strong_fluctuations(data, threshold):
         print('Тревога! Тревога! Волк унёс зайчат!'
               f'Максимальные колебания за выбранный период - {actual_differential}%, превышают проверочные - {threshold}%. '
               'Вы выбрали волнительный период...')
+
+
+def export_data_to_csv(ticker, period, data_average, filename=None):
+    average_round = round(float(data_average), 2)
+    data = {'Name': [ticker], 'Selected period': [period], 'Average value': [average_round]}
+    frame = pd.DataFrame(data)
+    if filename is None:
+        filename = f"Average_value_{ticker}_for_{period}"
+    frame.to_csv(filename, index=False)
