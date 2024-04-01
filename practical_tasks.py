@@ -52,6 +52,17 @@ def notify_if_strong_fluctuations(data, threshold):
               'Вы выбрали волнительный период...')
 
 
+# Задача №3. Реализовать функционал: Экспорт данных в CSV
+# Реализовать функционал: Экспорт данных в CSV
+# 
+# Ваша задача:
+# Вывод средней цены за период:
+# 
+#  Цель:
+# Добавить функцию export_data_to_csv(data, filename), которая позволяет сохранять загруженные данные об акциях в CSV файл.
+# 
+# Реализация:
+# Функция будет принимать DataFrame и имя файла, после чего сохранять данные в указанный файл.
 def export_data_to_csv(ticker, period, data_average, filename=None):
     average_round = round(float(data_average), 2)
     data = {'Name': [ticker], 'Selected period': [period], 'Average value': [average_round]}
