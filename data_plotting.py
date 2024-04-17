@@ -1,7 +1,10 @@
 import matplotlib.pyplot as plt
 
 
-def create_and_save_plot(data, ticker, period, filename=None):
+def create_and_save_plot(data, ticker, period, choice_style=None, filename=None):
+    if choice_style is not None:
+        plt.style.use(choice_style)
+        
     plt.figure(figsize=(12, 18)) # размеры (ширина и высота) диаграммы
     plt.subplot(3, 1, 1)
     if 'Date' not in data:
