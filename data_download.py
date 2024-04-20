@@ -45,6 +45,9 @@ def add_moving_average(data, window_size=5):
     data['MCAD_main'] = data['Moving_Average_fast'] - data['Moving_Average_slow']
     data['MCAD_signal'] = data['MCAD_main'].rolling(window=sma_signal).mean()
 
+    # Расчет стандарта отклонения выборки по списку (calculate standard deviation of list)
+    data['Standart_deviation_list'] = data['Close'].rolling(window=window_size).std()
+    
     # Расчет для модуля practic_task_one_v2.py
     all_period = len(data)
     data['Average_period'] = data['Close'].sum() / all_period
