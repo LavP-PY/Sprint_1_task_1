@@ -1,17 +1,20 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def create_and_save_plot(data, ticker, period, choice_style=None, filename=None):
     if choice_style is not None:
         plt.style.use(choice_style)
-        
+
     plt.figure(figsize=(12, 18)) # размеры (ширина и высота) диаграммы
     plt.subplot(3, 1, 1)
+
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
             dates = data.index.to_numpy()
             plt.plot(dates, data['Close'].values, label='Close Price')
             plt.plot(dates, data['Moving_Average'].values, label='Moving Average')
+            plt.plot(dates, data['Standart_deviation_list'].values, label='Standart deviation')
 
         else:
             print("Информация о дате отсутствует или не имеет распознаваемого формата.")
@@ -21,11 +24,12 @@ def create_and_save_plot(data, ticker, period, choice_style=None, filename=None)
             data['Date'] = pd.to_datetime(data['Date'])
         plt.plot(data['Date'], data['Close'], label='Close Price')
         plt.plot(data['Date'], data['Moving_Average'], label='Moving Average')
+        plt.plot(data['Date'], data['Standart_deviation_list'], label='Standart deviation')
 
     plt.title(f"{ticker} Цена акций с течением времени")
     plt.xlabel("Дата")
     plt.ylabel("Цена")
-    plt.legend()
+    plt.legend(loc='center left')
     # plt.grid(True)
 
     plt.subplot(3, 1, 2)
@@ -63,12 +67,12 @@ def create_and_save_plot(data, ticker, period, choice_style=None, filename=None)
             data['Date'] = pd.to_datetime(data['Date'])
         plt.plot(data['Date'], data['MCAD_main'], label='MCAD basic')
         plt.plot(data['Date'], data['MCAD_signal'], label='MCAD signal')
-    plt.legend()
+    plt.legend(loc='upper left')
     plt.grid(True)
 
 
     if filename is None:
-        filename = f"{ticker}_{period}_stock_price_chart.png"
+        filename = f"{ticker}_{period}_stock_price_chart__{choice_style}.png"
 
     plt.savefig(filename)
     print(f"График сохранен как {filename}")
