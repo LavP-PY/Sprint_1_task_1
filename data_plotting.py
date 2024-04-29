@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import plotly.graph_objects as go
 
 
 def create_and_save_plot(data, ticker, period, choice_style=None, filename=None):
@@ -76,3 +77,8 @@ def create_and_save_plot(data, ticker, period, choice_style=None, filename=None)
 
     plt.savefig(filename)
     print(f"График сохранен как {filename}")
+    
+    # Подключаем альтернативную библиотеку для построения графиков
+    date_time = data.index.to_numpy()
+    fig = go.Figure([go.Scatter(x=date_time, y=data['Close'].values)])
+    fig.show()
