@@ -1,13 +1,25 @@
 import yfinance as yf
 
 
-def fetch_stock_data(ticker, period='1mo'):
+def fetch_stock_data(ticker, period):
+    """
+    Принимает имя тикера и период, введённые пользователем.
+    :param ticker:
+    :param period:
+    :return: Возвращает таблицу с данными об акции
+    """
     stock = yf.Ticker(ticker)
     data = stock.history(period=period)
     return data
 
-
 def calculate_and_display_average_price_rsi(data, period=14, ema=True):
+    """
+    Принимает таблицу с данными акции. Рассчитывает (по скользящим значениям цены закрытия) и возвращает индекс RSI
+    :param data:
+    :param period:
+    :param ema:
+    :return: RSI (индекс относительной силы)
+    """
     close_delta = data['Close'].diff()
     # Делаем две серии: одну для низких закрытий и одну для высоких закрытий
     up = close_delta.clip(lower=0)
@@ -28,6 +40,16 @@ def calculate_and_display_average_price_rsi(data, period=14, ema=True):
 
 
 def add_moving_average(data, window_size=5):
+    """
+    Рассчитывает и добавляет в таблицу данные по акции для последующей их визуализации:
+        скользящая средняя, индикаторы RSI SMA и RSI EMA, индикаторы MACD (стандартная и сигнальная),
+        стандарт отклонения выборки.
+    Возвращает таблицу с новыми данными.
+    :param data:
+    :param window_size: стандартное значение для расчета скользящей средней
+    :return: таблица data
+    """
+    # Расчет скользящей средней
     data['Moving_Average'] = data['Close'].rolling(window=window_size).mean()
 
     # RSI
@@ -47,8 +69,9 @@ def add_moving_average(data, window_size=5):
 
     # Расчет стандарта отклонения выборки по списку (calculate standard deviation of list)
     data['Standart_deviation_list'] = data['Close'].rolling(window=window_size).std()
-    
+
     # Расчет для модуля practic_task_one_v2.py
     all_period = len(data)
     data['Average_period'] = data['Close'].sum() / all_period
     return data
+
